@@ -19,7 +19,7 @@ public class Main extends JFrame {
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        PlanGame planGame = new PlanGame();
+       PlanGame planGame = new PlanGame();
         add(planGame);
         addWindowListener(new WindowListener() {
             @Override
