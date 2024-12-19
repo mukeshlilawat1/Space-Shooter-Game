@@ -1,7 +1,5 @@
 # Space Shooter Game
 
-![Space Shooter](https://example.com/banner-image.png)
-
 A thrilling 2D space shooter game where players battle waves of enemy spaceships while collecting power-ups and achieving high scores.
 
 ---
