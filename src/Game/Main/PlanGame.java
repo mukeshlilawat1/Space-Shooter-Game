@@ -34,6 +34,7 @@ public class PlanGame extends JComponent {
     private Player player;
     private List<Bullet> bullets;
     private List<Rocket> rockets;
+    private List<Effect> BoomEffect;
 
     public void start() {
         width = getWidth();
@@ -84,7 +85,7 @@ public class PlanGame extends JComponent {
         player = new Player();
         player.changeLocation(150, 150);
         rockets = new ArrayList<>();
-
+        BoomEffect = new ArrayList<>();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -182,6 +183,42 @@ public class PlanGame extends JComponent {
         }).start();
     }
 
+    // private void checkBullets(Bullet bullet) {
+    // for (int i = 0; i < rockets.size(); i++) {
+    // Rocket rocket = rockets.get(i);
+    // if (rocket != null) {
+    // Area area = new Area(bullet.getShape());
+    // area.intersect(rocket.getShape());
+    // if (!area.isEmpty()) {
+    // BoomEffect.add(new Effect(bullet.getCenterX(), bullet.getCenterY(), 3, 5, 60,
+    // 5, new Color(230, 207, 105)));
+    //
+    //
+    // // rockets.remove(rocket);
+    // bullets.remove(bullet);
+    // }
+    // }
+    // }
+    // }
+
+    // private void checkBullets(Bullet bullet) {
+    // for (int i = 0; i < rockets.size(); i++) {
+    // Rocket rocket = rockets.get(i);
+    // if (rocket != null) {
+    // Area area = new Area(bullet.getShape());
+    // area.intersect(rocket.getShape());
+    // if (!area.isEmpty()) {
+    // BoomEffect.add(new Effect(bullet.getCenterX(), bullet.getCenterY(), 3, 5, 60,
+    // 5, new Color(230, 207, 105)));
+
+    // // rockets.remove(rocket);
+    // bullets.remove(bullet);
+    // break; // Exit the loop after finding a collision
+    // }
+    // }
+    // }
+    // }
+
     private void checkBullets(Bullet bullet) {
         for (int i = 0; i < rockets.size(); i++) {
             Rocket rocket = rockets.get(i);
@@ -189,8 +226,69 @@ public class PlanGame extends JComponent {
                 Area area = new Area(bullet.getShape());
                 area.intersect(rocket.getShape());
                 if (!area.isEmpty()) {
-                    rockets.remove(rocket);
+                    // Add a BoomEffect for the explosion
+                    BoomEffect.add(new Effect(
+                            bullet.getCenterX(),
+                            bullet.getCenterY(),
+                            80, // Increased max_distance for better visibility
+                            10, // Adjust size for better effect
+                            3, // Adjust speed for better animation
+                            30, // Increased number of particles for richer effect
+                            new Color(230, 207, 105)));
+
+                    if (true) { // for test hp
+                        // Optionally remove the rocket if desired
+                        rockets.remove(rocket);
+                        double x = rocket.getX() + Rocket.ROCKET_SIZE / 2;
+                        double y = rocket.getY() + Rocket.ROCKET_SIZE / 2;
+
+                        // Add a BoomEffect for the explosion
+                        BoomEffect.add(new Effect(
+                                x,
+                                y,
+                                80, // Increased max_distance for better visibility
+                                10, // Adjust size for better effect
+                                3, // Adjust speed for better animation
+                                30, // Increased number of particles for richer effect
+                                new Color(32, 178, 170))); // Add a BoomEffect for the explosion
+                        BoomEffect.add(new Effect(
+                                x,
+                                y,
+                                80, // Increased max_distance for better visibility
+                                10, // Adjust size for better effect
+                                3, // Adjust speed for better animation
+                                25, // Increased number of particles for richer effect
+                                new Color(32, 178, 170))); // Add a BoomEffect for the explosion
+                        BoomEffect.add(new Effect(
+                                x,
+                                y,
+                                10, // Increased max_distance for better visibility
+                                10, // Adjust size for better effect
+                                100, // Adjust speed for better animation
+                                20, // Increased number of particles for richer effect
+                                new Color(232, 207, 105))); // Add a BoomEffect for the explosion
+                        BoomEffect.add(new Effect(
+                                x,
+                                y,
+                                80, // Increased max_distance for better visibility
+                                10, // Adjust size for better effect
+                                3, // Adjust speed for better animation
+                                30, // Increased number of particles for richer effect
+                                new Color(32, 178, 170))); // Add a BoomEffect for the explosion
+                        BoomEffect.add(new Effect(
+                                x,
+                                y,
+                                80, // Increased max_distance for better visibility
+                                10, // Adjust size for better effect
+                                3, // Adjust speed for better animation
+                                30, // Increased number of particles for richer effect
+                                new Color(32, 178, 170)));
+                    }
+
+                    // Remove the bullet after collision
                     bullets.remove(bullet);
+
+                    break; // Exit loop after handling the collision
                 }
             }
         }
@@ -215,6 +313,17 @@ public class PlanGame extends JComponent {
                             bullets.remove(bullet);
                         }
                     }
+                    for (int i = 0; i < BoomEffect.size(); i++) {
+                        Effect boomEffect = BoomEffect.get(i);
+                        if (boomEffect != null) {
+                            boomEffect.update();
+                            if (!boomEffect.check()) {
+                                BoomEffect.remove(boomEffect);
+                            }
+                        } else {
+                            BoomEffect.remove(boomEffect);
+                        }
+                    }
                     sleep(1);
                 }
             }
@@ -233,12 +342,20 @@ public class PlanGame extends JComponent {
             if (bullet != null) {
                 bullet.draw(g2);
             }
+
         }
 
         for (int i = 0; i < rockets.size(); i++) {
             Rocket rocket = rockets.get(i);
             if (rocket != null) {
                 rocket.draw(g2);
+            }
+        }
+
+        for (int i = 0; i < BoomEffect.size(); i++) {
+            Effect boomEffect = BoomEffect.get(i);
+            if (boomEffect != null) {
+                boomEffect.draw(g2);
             }
         }
     }
