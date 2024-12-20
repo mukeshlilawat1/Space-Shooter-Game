@@ -1,5 +1,4 @@
 # Space-Shooter-Game
-
 # PlanGame
 
 PlanGame is a 2D space shooter game built using Java Swing. The game features a player-controlled spaceship, rockets as enemies, and bullets to destroy them. The game includes animations, collision detection, and explosion effects, making it visually engaging.
@@ -77,7 +76,7 @@ PlanGame is a 2D space shooter game built using Java Swing. The game features a 
 
 ## Screenshots
 
-![alt text](<Screenshot (28).png>)
+*(Add images or GIFs here to showcase gameplay)*
 
 ---
 
@@ -106,3 +105,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 - Java Swing for GUI development.
 - Inspiration from classic space shooter games.
+
